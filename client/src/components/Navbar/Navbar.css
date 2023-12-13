@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .Top-Section {
+    background: #f2f2f2;
+    color: #000000;
+    text-align: center;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 20px;
+  }
+  
+  .logo-img {
+    height: 80px;
+    padding-right: 100px;
+  }
+  
+  .navbar {
+    display: flex;
+  }
+  
+  .link {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    padding: 10px;
+    transition: all 0.5s;
+    text-align: center;
+    margin-right: 100px;
+  }
+  
+  .link:hover {
+    background: lightskyblue;
+    color: #000000;
+    transition: all 0.5s;
+  }
+  
+  .active {
+    background: rgb(228, 228, 228);
+    color: #000;
+  }
+  
+  .icon {
+    font-size: 20px;
+  }
+  
+  .link_text {
+    font-size: 14px; 
+  }

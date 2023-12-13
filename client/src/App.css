@@ -1,0 +1,27 @@
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: #f9f6f1;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #ecf0f5;
+}
+
+main {
+  padding: 20px;
+}
+
+.MuiDataGrid-main .MuiDataGrid-columnHeaders {
+  background-color: #3883bd;
+  color: #fff;
+}

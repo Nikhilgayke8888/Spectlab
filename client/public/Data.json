@@ -1,0 +1,14 @@
+{   "id":"1",
+    "Doctorname": "Doctor 1",
+    "mobile": "123-456-7890",
+    "email": "doctor1@example.com",
+    "specialization": "Specialty 1",
+    "hospitalName": "Hospital A",
+    "landline": "987-654-3210",
+      "address": "123 Main Street",
+      "state": "State A",
+      "city": "City A",
+      "area": "Area A",
+      "pincode": "12345"
+   
+}
