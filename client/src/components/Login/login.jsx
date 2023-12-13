@@ -1,47 +1,34 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import './LoginStyles.css'; 
 import { useNavigate } from 'react-router-dom';
-import { loginEmployee } from '../../lib/api-login';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../redux/authentication/actionCreator';
 
 export default function Login() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  
+  const { isAuthenticated } = useSelector((state) => {
+    return {      
+      isAuthenticated: state.auth.login,
+    };
+  });
 
   const handleLogin = async () => {
-    try {
-      const response = await loginEmployee({ username, password });
-  
-      if (response.data.Status === 'Success') {
-        const { token } = response.data;
-  
-
-        const expirationDate = new Date();
-        expirationDate.setDate(expirationDate.getDate() + 7);
-  
-   
-        document.cookie = `token=${token}; expires=${expirationDate.toUTCString()}; path=/; Secure`;
-  
-     
-        dispatch({ type: 'login' });
-  
-        console.log('Login successful. Token:', token);
-        navigate('/Dashboard');
-      } else {
-        console.log('Login unsuccessful. Status:', response.data.Status);
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-  
-    }
+    dispatch(login({username, password}));
   };
-  
+
+  useEffect(() => {
+    if(isAuthenticated){      
+      navigate('/Dashboard');
+    }
+  }, [isAuthenticated, navigate]);  
 
   return (
     <div className="login-container">

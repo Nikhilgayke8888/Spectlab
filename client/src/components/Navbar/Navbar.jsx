@@ -1,22 +1,26 @@
-import React from 'react';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { NavLink, useNavigate } from 'react-router-dom'; 
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useDispatch } from 'react-redux'; 
+import { useDispatch, useSelector } from 'react-redux'; 
 import './Navbar.css';
+import { logOut } from '../../redux/authentication/actionCreator';
+import { useEffect } from 'react';
 
+// eslint-disable-next-line react/prop-types
 export const Navbar = ({ children }) => {
+  const { isAuthenticated } = useSelector((state) => {
+    return {      
+      isAuthenticated: state.auth.login,
+    };
+  });
   const navigate = useNavigate(); 
   const dispatch = useDispatch(); 
 
-  const handleDelete = () => {
-    localStorage.setItem('token', 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/');
-    localStorage.removeItem('login');
-    dispatch({ type: 'logout' }); 
-    navigate('/');
+  const handleDelete = () => {       
+    dispatch(logOut());     
   };
 
   const menuItem = [
@@ -41,12 +45,18 @@ export const Navbar = ({ children }) => {
       icone: <AssessmentIcon />,
     },
     {
-      path: '/',
+      path: '#',
       name: 'LogOut',
-      icone: <LogoutIcon />,
+      icone: <LogoutIcon />,      
       onClick: handleDelete, // Corrected onClick attribute
     },
   ];
+
+  useEffect(() => {
+    if(!isAuthenticated){      
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className='container'>
@@ -56,7 +66,10 @@ export const Navbar = ({ children }) => {
         </div>
         <div className='navbar'>
           {menuItem.map((item, index) => (
-            <NavLink to={item.path} key={index} className='link' activeClassName='active'>
+            !item.onClick ? <NavLink to={item.path} key={index} className='link' activeClassName='active'>
+              <div className='icon'>{item.icone}</div>
+              <div className='link_text'>{item.name}</div>
+            </NavLink> : <NavLink to={item.path} key={index} onClick={item.onClick} className='link' activeClassName='active'>
               <div className='icon'>{item.icone}</div>
               <div className='link_text'>{item.name}</div>
             </NavLink>
